@@ -1,0 +1,26 @@
+{
+  "name": "m9s.io",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "inferno": "^4.0.8",
+    "inferno-router": "^4.0.8",
+    "inferno-scripts": "6.1.0"
+  },
+  "scripts": {
+    "start": "inferno-scripts start",
+    "build": "inferno-scripts build",
+    "test": "inferno-scripts test --env=jsdom",
+    "eject": "inferno-scripts eject",
+    "postbuild": "react-snap"
+  },
+  "devDependencies": {
+    "react-snap": "^1.11.4"
+  },
+  "reactSnap": {
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ]
+  }
+}
