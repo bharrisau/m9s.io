@@ -3,9 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "date-fns": "^1.29.0",
+    "gray-matter": "^4.0.1",
     "inferno": "^4.0.8",
+    "inferno-create-element": "^5.1.1",
     "inferno-router": "^4.0.8",
-    "inferno-scripts": "6.1.0"
+    "inferno-scripts": "6.1.0",
+    "markdown-with-front-matter-loader": "^0.1.0",
+    "raw-loader": "^0.5.1",
+    "remark": "^9.0.0",
+    "remark-react": "^4.0.3",
+    "tachyons": "^4.9.1"
   },
   "scripts": {
     "start": "inferno-scripts start",
