@@ -1,4 +1,4 @@
-import { version, Component, createPortal } from 'inferno';
+import { version, Component } from 'inferno';
 import { BrowserRouter, Route, Switch, Link } from 'inferno-router';
 import './registerServiceWorker';
 import Logo from './logo';
@@ -34,6 +34,7 @@ class Header extends Component {
             <header>
             <Logo width="80" height="80" />
             <h1>{`Welcome to Inferno ${version}`}</h1>
+            <h2>Tagling goes here</h2>
             </header>
         );
     }
