@@ -1,4 +1,4 @@
-import { render, hydrate } from 'inferno';
+import { render } from 'inferno';
 import App from './App';
 import './index.css';
 import 'tachyons/css/tachyons.css';
