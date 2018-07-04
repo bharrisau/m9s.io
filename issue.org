@@ -1,0 +1,3 @@
+TODO Allow post metadata to reference 'modules' to be included
+Use these modules to link to the correct <MyModule> call when included in the Markdown.
+Try to stop the hyperscript-raw from lowercasing everything - otherwise just do the raw processing ourselves.
