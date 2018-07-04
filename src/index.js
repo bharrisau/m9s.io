@@ -1,7 +1,6 @@
 import { render } from 'inferno';
 import App from './App';
-import './index.css';
-import 'tachyons/css/tachyons.css';
+import './index-generated.css';
 
 const appElement = document.getElementById('container');
 render(<App />, appElement);

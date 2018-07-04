@@ -2,7 +2,6 @@ import { version, Component } from 'inferno';
 import { BrowserRouter, Route, Switch, Link } from 'inferno-router';
 import './registerServiceWorker';
 import Logo from './logo';
-import './App.css';
 import Post from './Post';
 
 const NotFound = () => (
