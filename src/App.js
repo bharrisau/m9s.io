@@ -1,7 +1,6 @@
-import { version, Component } from 'inferno';
+import { Component } from 'inferno';
 import { BrowserRouter, Route, Switch, Link } from 'inferno-router';
 import './registerServiceWorker';
-import Logo from './logo';
 import Post from './Post';
 
 const NotFound = () => (
@@ -12,11 +11,8 @@ const NotFound = () => (
 );
 
 const Home = () => (
-  <div>
-    <p class="f4 lh-copy">
-    Hello Ben.
-    </p>
-        <Post stub='./2018-03-14-test.md' short />
+        <div className="py-8">
+        <Post stub='./2018-03-14-test.md' />
   </div>
 );
 
@@ -30,10 +26,10 @@ const About = () => (
 class Header extends Component {
     render() {
         return (
-            <header>
-            <Logo width="80" height="80" />
-            <h1>{`Welcome to Inferno ${version}`}</h1>
-            <h2>Tagling goes here</h2>
+            <header className="border-t-4 border-blue">
+                <div className="px-8 py-4 border-b text-grey-dark hover:text-black trans">
+                <h1><Link to="/" className="inherit no-underline">m9s.io</Link></h1>
+                </div>
             </header>
         );
     }
@@ -42,8 +38,9 @@ class Header extends Component {
 class Footer extends Component {
     render() {
         return (
-                <footer>
-                <p>This is my footer</p>
+                <footer className="py-8 border-t">
+                <div className="max-w-md mx-auto">
+                </div>
                 </footer>
         );
     }
@@ -62,7 +59,7 @@ class Title extends Component {
 class Body extends Component {
     render() {
         return (
-    <section className="App">
+    <section className="font-sans">
     <Link to="/">Home</Link>
     <Link to="/about">About</Link>
 
@@ -85,8 +82,8 @@ class App extends Component {
       <BrowserRouter>
         <div>
         <Header />
-        <Body />
-        <Footer />
+        <Home />
+        <Footer/>
         </div>
       </BrowserRouter>
     );

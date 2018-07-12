@@ -10,7 +10,7 @@
     "inferno-scripts": "6.1.0"
   },
   "scripts": {
-    "start": "npm-run-all build:styles start",
+    "start": "npm-run-all build:styles start:app",
     "start:app": "inferno-scripts start",
     "build": "npm-run-all build:styles build:app",
     "build:styles": "tailwind build src/index.css -c tailwind.js -o src/index-generated.css",
