@@ -1,5 +1,4 @@
 import { createElement } from 'inferno-create-element';
-import 'highlight.js/styles/default.css';
 import format from 'date-fns/format';
 
 const posts = require.context('!./post-loader!./_posts', false, /.md$/);
@@ -65,7 +64,6 @@ function h(tag, attr, children) {
         attr.className = style;
     }
 
-    console.log(tag, attr, children);
     return createElement(tag, attr, children);
 }
 
