@@ -1,6 +1,8 @@
 /*
   X-Frame-Options: DENY
   X-XSS-Protection: 1; mode=block
+  Referrer-Policy: same-origin
+  X-Content-Type-Options: nosniff
 
 /static/*
   Cache-Control: max-age=31536000
