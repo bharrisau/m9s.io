@@ -1,9 +1,12 @@
 import { render } from 'inferno';
 import App from './App';
-import './index-generated.css';
+import './normalise.css';
+import './index.css';
 
 const appElement = document.getElementById('container');
-render(<App />, appElement);
+App.preload().then(() => {
+    render(<App />, appElement);
+});
 
 // render will call hydrate when needed
 // if (appElement.hasChildNodes()) {

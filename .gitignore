@@ -22,4 +22,6 @@ yarn-error.log*
 
 *.orig
 package-lock.json
-src/index-generated.css
+src/index.css
+src/normalise.css
+.tern-port

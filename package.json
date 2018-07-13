@@ -1,5 +1,6 @@
 {
   "name": "m9s.io",
+  "homepage": "https://www.m9s.io",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -12,8 +13,11 @@
   "scripts": {
     "start": "npm-run-all build:styles start:app",
     "start:app": "inferno-scripts start",
-    "build": "npm-run-all build:styles build:app",
-    "build:styles": "tailwind build src/index.css -c tailwind.js -o src/index-generated.css",
+    "build": "npm-run-all build:styles build:purge build:app",
+    "build:styles" : "npm-run-all tailwind:normalise tailwind:index",
+    "tailwind:normalise": "tailwind build src/normalise.src.css -c tailwind.js -o src/normalise.css",
+    "tailwind:index": "tailwind build src/index.src.css -c tailwind.js -o src/index.css",
+    "build:purge": "purgecss -c purgecss.config.js -o src",
     "build:app": "inferno-scripts build",
     "test": "inferno-scripts test --env=jsdom",
     "eject": "inferno-scripts eject",
@@ -24,6 +28,7 @@
     "js-yaml": "^3.12.0",
     "mdast-util-to-hast": "^3.0.1",
     "npm-run-all": "^4.1.3",
+    "purgecss": "^1.0.1",
     "raw-loader": "^0.5.1",
     "react-snap": "^1.11.4",
     "rehype-raw": "^2.0.0",

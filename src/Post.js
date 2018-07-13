@@ -1,7 +1,9 @@
+import { Component } from 'inferno';
+import { Link } from 'inferno-router';
 import { createElement } from 'inferno-create-element';
 import format from 'date-fns/format';
 
-const posts = require.context('!./post-loader!./_posts', false, /.md$/);
+const posts = require.context('!./post-loader!./_posts', false, /.md$/, 'lazy');
 
 const styles = {
     title: 'max-w-md mx-auto text-4xl px-3 lh-title mb-5 text-black',
@@ -71,27 +73,83 @@ function render(nodes, short) {
     function e(n) { return Array.isArray(n) ? h(n[0], n[1], n.length < 3 ? undefined : n[2].map(e)) : n; }
 
     if (short) {
-        nodes = nodes.slice(0, 6);
+        nodes = nodes.slice(0, Math.min(6, nodes.length));
     }
 
     return nodes.map(e);
 }
 
-function Post({ stub, short }) {
-    var post = posts(stub);
-    var header = post.header;
-    var stubMatch = stub.match(/.\/((\d+-\d+-\d+)-[^.]+).*/);
+class Post extends Component {
+    static all = posts
+        .keys()
+        .map(v => v.slice(2, -3))
+        .sort((a, b) => {
+            var aDraft = a.startsWith('draft');
+            var bDraft = b.startsWith('draft');
 
-    var id = stubMatch[1];
-    var date = header.date || stubMatch[2];
+            if (aDraft ^ bDraft) {
+                return aDraft ? -1 : 1;
+            } else {
+                return a.localeCompare(b);
+            }
+        });
 
-    return (
-            <article id={id}>
-            <time class={styles.date} datetime={date}>{format(date, 'MMMM DD, YYYY')}</time>
-            <h1 class={styles.title}>{header.title || 'Untitled'}</h1>
-            {render(post.content, short)}
-        </article>
-    );
+    static recent = Post.all.slice(0, Math.min(5, Post.all.length));
+
+    static preload(toLoad) {
+        if (!Array.isArray(toLoad)) {
+            toLoad = [toLoad];
+        }
+
+        return Promise.all(toLoad.map(post => posts(`./${post}.md`)));
+    }
+
+    _hasUnmounted = false;
+
+    state = {
+        post: false,
+    };
+
+    constructor(props) {
+        super(props);
+
+        this.props.stub = this.props.stub || this.props.match.params.stub;
+    }
+
+    componentDidMount() {
+        var stub = this.props.stub;
+        posts(`./${stub}.md`).then(post => {
+            if (!this.hasUnmounted) {
+                this.setState({ post: post });
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        this._hasUnmounted = true;
+    }
+
+    render({ stub, short }) {
+        if (this.state.post) {
+            var post = this.state.post;
+            var header = post.header;
+            var stubMatch = stub.match(/(\d+-\d+-\d+)-.+/) || [];
+
+            var date = header.date || stubMatch[1] || Date.now();
+
+            return (
+                    <article id={stub}>
+                    <time class={styles.date} datetime={date}>{format(date, 'MMMM DD, YYYY')}</time>
+                    <h1 class={styles.title}><Link to={'/posts/' + stub} className="inherit no-underline">{header.title || 'Untitled'}</Link></h1>
+                    {render(post.content, short)}
+                </article>
+            );
+        } else {
+            return (
+                    <div><p>Loading</p></div>
+            );
+        }
+    }
 }
 
 export default Post;

@@ -20,7 +20,10 @@ function lazy() {
         var asHAST = toHAST(node, { allowDangerousHTML: true });
         var cleaned = cleanRaw(asHAST);
 
-        return { header: header, content: toH(h, cleaned)[2]};
+        var nodes = toH(h, cleaned)[2]
+            .filter(function(v) { return v !== '\n'; });
+
+        return { header: header, content: nodes };
     }
 }
 
@@ -34,8 +37,8 @@ module.exports = function postLoader(source) {
         .processSync(source).contents;
 
     const json = JSON.stringify(post)
-          .replace(/\u2028/g, '\\u2028')
-          .replace(/\u2029/g, '\\u2029');
+        .replace(/\u2028/g, '\\u2028')
+        .replace(/\u2029/g, '\\u2029');
 
     return `module.exports = ${json};`;
 };

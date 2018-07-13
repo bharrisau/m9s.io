@@ -10,9 +10,14 @@ const NotFound = () => (
   </div>
 );
 
+const RecentPosts =
+    Post.recent.map(stub => (
+            <Post stub={stub} short />
+    ));
+
 const Home = () => (
-        <div className="py-8">
-        <Post stub='./2018-03-14-test.md' />
+  <div>
+        { RecentPosts }
   </div>
 );
 
@@ -48,7 +53,7 @@ class Footer extends Component {
 
 class Title extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.title = props.title;
   }
   componentDidMount() {
@@ -59,15 +64,11 @@ class Title extends Component {
 class Body extends Component {
     render() {
         return (
-    <section className="font-sans">
-    <Link to="/">Home</Link>
-    <Link to="/about">About</Link>
-
-    <Link to="/2018-03-14-test">Testing</Link>
-
+    <section className="font-sans py-8">
     <Switch>
     <Route exact path="/" component={Home}/>
     <Route path="/about" component={About}/>
+    <Route path="/posts/:stub" component={Post}/>
 
     <Route component={NotFound}/>
     </Switch>
@@ -77,12 +78,24 @@ class Body extends Component {
 }
 
 class App extends Component {
+    static preload() {
+        var path = window.location.pathname;
+
+        if (path === '/') {
+            return Post.preload(Post.recent);
+        } else if (path.startsWith('/posts/')) {
+            return Post.preload(path.slice(7));
+        } else {
+            return Promise.resolve();
+        }
+    }
+
   render() {
     return (
       <BrowserRouter>
         <div>
         <Header />
-        <Home />
+        <Body />
         <Footer/>
         </div>
       </BrowserRouter>
