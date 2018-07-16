@@ -2,6 +2,7 @@ import { Component } from 'inferno';
 import { Link } from 'inferno-router';
 import { createElement } from 'inferno-create-element';
 import format from 'date-fns/format';
+import Title from './Title';
 
 const posts = require.context('!./post-loader!./_posts', false, /.md$/, 'lazy');
 
@@ -10,8 +11,9 @@ const styles = {
     h2: 'max-w-md mx-auto mb-4 px-3 text-grey-darkest',
     date: 'max-w-md mx-auto block text-sm mb-2 px-3 text-grey-dark hover:text-black font-bold trans uppercase',
     p: 'max-w-md mx-auto mb-4 px-3 leading-normal text-grey-darkest',
-    pre: 'mb-4 border-t border-b bg-grey-lightest',
-    code: 'max-w-md mx-auto block p-3',
+    pre: 'code-block whitespace-pre-wrap',
+    //pre: 'mb-4 border-t border-b bg-grey-lightest',
+    //code: 'max-w-md mx-auto block p-3',
     blockquote: 'max-w-md mx-auto mb-4 pl-2 pr-3 border-l-8 border-blue',
 };
 
@@ -73,7 +75,7 @@ function render(nodes, short) {
     function e(n) { return Array.isArray(n) ? h(n[0], n[1], n.length < 3 ? undefined : n[2].map(e)) : n; }
 
     if (short) {
-        nodes = nodes.slice(0, Math.min(6, nodes.length));
+        nodes = nodes.slice(0, Math.min(4, nodes.length));
     }
 
     return nodes.map(e);
@@ -136,11 +138,13 @@ class Post extends Component {
             var stubMatch = stub.match(/(\d+-\d+-\d+)-.+/) || [];
 
             var date = header.date || stubMatch[1] || Date.now();
+            var title = header.title || 'Untitled';
 
             return (
                     <article id={stub}>
+                    { short || <Title title={title} /> }
                     <time class={styles.date} datetime={date}>{format(date, 'MMMM DD, YYYY')}</time>
-                    <h1 class={styles.title}><Link to={'/posts/' + stub} className="inherit no-underline">{header.title || 'Untitled'}</Link></h1>
+                    <h1 class={styles.title}><Link to={'/posts/' + stub} className="inherit no-underline">{title}</Link></h1>
                     {render(post.content, short)}
                 </article>
             );

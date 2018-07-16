@@ -2,6 +2,7 @@ import { Component } from 'inferno';
 import { BrowserRouter, Route, Switch, Link } from 'inferno-router';
 import './registerServiceWorker';
 import Post from './Post';
+import Title from './Title';
 
 const NotFound = () => (
   <div>
@@ -17,6 +18,7 @@ const RecentPosts =
 
 const Home = () => (
   <div>
+        <Title title="m9s.io" />
         { RecentPosts }
   </div>
 );
@@ -51,15 +53,6 @@ class Footer extends Component {
     }
 }
 
-class Title extends Component {
-  constructor(props) {
-    super(props);
-    this.title = props.title;
-  }
-  componentDidMount() {
-    document.title = this.title;
-  }
-}
 
 class Body extends Component {
     render() {
