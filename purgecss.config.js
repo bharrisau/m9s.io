@@ -10,5 +10,6 @@ module.exports = {
             },
             extensions: ['js']
         }
-    ]
+    ],
+     whitelistPatternsChildren: [/^code-block$/]
 };
