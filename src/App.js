@@ -57,7 +57,7 @@ class Footer extends Component {
 class Body extends Component {
     render() {
         return (
-    <section className="font-sans py-8">
+    <section className="font-sans my-10">
     <Switch>
     <Route exact path="/" component={Home}/>
     <Route path="/about" component={About}/>

@@ -7,10 +7,12 @@ import Title from './Title';
 const posts = require.context('!./post-loader!./_posts', false, /.md$/, 'lazy');
 
 const styles = {
+    article: 'mb-10',
     title: 'max-w-md mx-auto text-4xl px-3 lh-title mb-5 text-black',
     h2: 'max-w-md mx-auto mb-4 px-3 text-grey-darkest',
     date: 'max-w-md mx-auto block text-sm mb-2 px-3 text-grey-dark hover:text-black font-bold trans uppercase',
     p: 'max-w-md mx-auto mb-4 px-3 leading-normal text-grey-darkest',
+    readMore: 'max-w-md mx-auto mb-4 px-3 leading-normal text-grey-dark',
     pre: 'code-block whitespace-pre-wrap',
     //pre: 'mb-4 border-t border-b bg-grey-lightest',
     //code: 'max-w-md mx-auto block p-3',
@@ -141,11 +143,12 @@ class Post extends Component {
             var title = header.title || 'Untitled';
 
             return (
-                    <article id={stub}>
+                    <article id={stub} className={styles.article}>
                     { short || <Title title={title} /> }
                     <time class={styles.date} datetime={date}>{format(date, 'MMMM DD, YYYY')}</time>
                     <h1 class={styles.title}><Link to={'/posts/' + stub} className="inherit no-underline">{title}</Link></h1>
                     {render(post.content, short)}
+                { short && <p className={styles.readMore}><Link to={'/posts/' + stub} className="inherit no-underline">Read more...</Link></p>}
                 </article>
             );
         } else {

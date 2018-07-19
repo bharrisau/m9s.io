@@ -10,3 +10,13 @@
  * @import "tailwindcss/preflight";
  */
 @tailwind preflight;
+
+html {
+    font-size: 18px;
+}
+
+/*
+@media (max-width: 900px) {
+    html { font-size: 15px; }
+}
+*/
